@@ -5,4 +5,6 @@ scripts/anbox-net.sh /usr/share/waydroid
 scripts/run-container.sh /usr/share/waydroid
 scripts/stop-container.sh /usr/share/waydroid
 scripts/vendor-fixup.sh /usr/share/waydroid
+scripts/generate-props.sh /usr/share/waydroid
+scripts/check-kernel-config.sh /usr/share/waydroid
 gbinder/anbox.conf /etc/gbinder.d
