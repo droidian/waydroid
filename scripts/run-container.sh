@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# FIXME: generate anbox.prop
+/usr/share/waydroid/droidian-genprops.sh
+
 cd /var/lib/lxc/waydroid
 
 if [ ! -e /dev/anbox-hwbinder ] || [ ! -e /dev/ashmem ]; then
