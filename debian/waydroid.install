@@ -1,0 +1,8 @@
+#! /usr/bin/dh-exec
+lxc-configs/config_2 => /var/lib/lxc/waydroid/config
+lxc-configs/config_nodes /var/lib/lxc/waydroid
+scripts/anbox-net.sh /usr/share/waydroid
+scripts/run-container.sh /usr/share/waydroid
+scripts/stop-container.sh /usr/share/waydroid
+scripts/vendor-fixup.sh /usr/share/waydroid
+gbinder/anbox.conf /etc/gbinder.d

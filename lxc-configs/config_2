@@ -1,6 +1,6 @@
 # Anbox LXC Config
 
-lxc.rootfs.path = /home/anbox/rootfs
+lxc.rootfs.path = /var/lib/lxc/rootfs
 lxc.uts.name = anbox
 lxc.arch = LXCARCH
 lxc.autodev = 0

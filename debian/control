@@ -1,0 +1,19 @@
+Source: waydroid
+Maintainer: Giuseppe Corti (r3vn) <giuseppe.corti@protonmail.com>
+Section: misc
+Priority: optional
+Build-Depends: debhelper (>= 13), dh-exec
+Standards-Version: 4.5.0.3
+Vcs-Browser: https://github.com/droidian/waydroid
+Vcs-Git: https://github.com/droidian/waydroid.git
+
+Package: waydroid
+Architecture: all
+Depends: waydroid-system-image, waydroid-vendor-image, anbox-sensors, ${misc:Depends}
+Provides: waydroid
+Description: Android™ application support
+ waydroid allows running a separate Android™ environment
+ confined to a LXC container.
+ .
+ This package only contains the required scripts and configurations
+ to properly run waydroid in Droidian. 
