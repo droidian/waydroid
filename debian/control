@@ -9,7 +9,7 @@ Vcs-Git: https://github.com/droidian/waydroid.git
 
 Package: waydroid
 Architecture: all
-Depends: waydroid-system-image, waydroid-vendor-image, anbox-sensors, ${misc:Depends}
+Depends: waydroid-system-image, waydroid-vendor-image, anbox-sensors, wget, ${misc:Depends}
 Provides: waydroid
 Description: Android™ application support
  waydroid allows running a separate Android™ environment

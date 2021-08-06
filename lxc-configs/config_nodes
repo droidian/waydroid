@@ -37,7 +37,7 @@ lxc.mount.entry = /sys/module/lowmemorykiller sys/module/lowmemorykiller none bi
 
 # Mount /data
 lxc.mount.entry = tmpfs mnt tmpfs mode=0755,uid=0,gid=1000
-lxc.mount.entry = /home/anbox/data data none bind 0 0
+lxc.mount.entry = /var/lib/lxc/waydroid/data data none bind 0 0
 
 # Mount host /vendor to /vendor_extra
 lxc.mount.entry = /vendor vendor_extra none bind,optional 0 0

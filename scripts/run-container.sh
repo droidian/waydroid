@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/anbox
+cd /var/lib/lxc/waydroid
 
 if [ ! -e /dev/anbox-hwbinder ] || [ ! -e /dev/ashmem ]; then
     modprobe binder_linux devices="anbox-binder,anbox-hwbinder,anbox-vndbinder"
@@ -14,7 +14,7 @@ if [ ! -e /dev/anbox-hwbinder ] || [ ! -e /dev/ashmem ]; then
 fi
 
 # just in case, stop Anbox 7
-stop anbox-container || true
+#stop anbox-container || true
 
 # start cgroup-lite, else container may fail to start.
 start cgroup-lite
@@ -24,10 +24,10 @@ umount -l /sys/fs/cgroup/schedtune
 anbox-sensord &
 
 # start anbox-net, that sets up lxc bridge
-/home/anbox/anbox-net.sh start
+/usr/share/waydroid/anbox-net.sh start
 
 # stop nfcd to not conflict with anbox
-stop nfcd
+#stop nfcd
 
 # umount rootfs if it was mounted
 umount -l rootfs || true
@@ -79,4 +79,4 @@ chmod 777 -R /dev/dri/*
 chmod 777 -R /dev/graphics/*
 chmod 777 -R /dev/fb*
 
-lxc-start -n anbox -F -- /init
+lxc-start -n waydroid -F -- /init
