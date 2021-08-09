@@ -1,0 +1,6 @@
+#!/bin/bash
+if pidof -x "/home/anbox/run-container.sh" >/dev/null; then
+    /usr/share/waydroid/stop-container.sh
+else
+    /usr/share/waydroid/run-container.sh
+fi

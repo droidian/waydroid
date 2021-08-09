@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Name=Waydroid
+Exec=pkexec /usr/bin/waydroid
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+StartupNotify=true
