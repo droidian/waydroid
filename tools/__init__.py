@@ -3,6 +3,7 @@
 # PYTHON_ARGCOMPLETE_OK
 import sys
 import logging
+import subprocess
 import os
 import traceback
 import dbus.mainloop.glib
@@ -13,7 +14,6 @@ from . import actions
 from . import config
 from . import helpers
 from .helpers import logging as tools_logging
-
 
 def main():
     def actionNeedRoot(action):
@@ -94,6 +94,31 @@ def main():
             else:
                 logging.info(
                     "Run waydroid {} -h for usage information.".format(args.action))
+        elif args.action == "notification":
+            actionNeedRoot(args.action)
+
+            try:
+                result = subprocess.run(['sudo', 'lxc-info', '-n', 'waydroid', '-P', '/var/lib/waydroid/lxc'],
+                                        stdout=subprocess.PIPE,
+                                        stderr=subprocess.PIPE,
+                                        text=True)
+                stdout = result.stdout
+                if "STOPPED" in stdout:
+                    print("ERROR: WayDroid container is not running.")
+                    return 1
+            except Exception as e:
+                print(f"An error occurred while checking container status: {e}")
+                return 1
+
+            if args.subaction == "start":
+                if actions.notification_manager.status():
+                    print("ERROR: WayDroid notification service is already running.")
+                else:
+                    actions.notification_manager.start(args)
+            elif args.subaction == "stop":
+                actions.notification_manager.stop(args)
+            elif args.subaction == "restart":
+                actions.notification_manager.restart(args)
         elif args.action == "app":
             if args.subaction == "install":
                 actions.app_manager.install(args)
