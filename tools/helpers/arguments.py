@@ -79,6 +79,13 @@ def arguments_notification(subparser):
     sub.add_parser("restart", help="restart notification")
     return ret
 
+def arguments_notification_send(subparser):
+    ret = subparser.add_parser("notification_send", help="notification_send controller")
+    sub = ret.add_subparsers(title="subaction", dest="subaction")
+    sub.add_parser("start", help="start notification_send")
+    sub.add_parser("stop", help="stop notification_send")
+    return ret
+
 def arguments_app(subparser):
     ret = subparser.add_parser("app", help="applications controller")
     sub = ret.add_subparsers(title="subaction", dest="subaction")
@@ -163,6 +170,7 @@ def arguments():
     arguments_session(sub)
     arguments_container(sub)
     arguments_notification(sub)
+    arguments_notification_send(sub)
     arguments_app(sub)
     arguments_prop(sub)
     arguments_fullUI(sub)

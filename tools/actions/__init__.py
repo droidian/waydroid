@@ -5,6 +5,7 @@ from tools.actions.upgrader import upgrade
 from tools.actions.session_manager import start, stop
 from tools.actions.container_manager import start, stop, freeze, unfreeze
 from tools.actions.notification_manager import start, stop, restart, status
+from tools.actions.notification_send import start, stop
 from tools.actions.app_manager import install, remove, launch, list
 from tools.actions.status import print_status
 from tools.actions.prop import get, set

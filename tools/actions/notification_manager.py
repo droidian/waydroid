@@ -7,56 +7,30 @@ import logging
 import threading
 import subprocess
 from pydbus import SessionBus
-from gi.repository import GLib
 from collections import defaultdict
 from tools import helpers
 from tools import config
 from tools.helpers import ipc
 from tools.interfaces import IPlatform
 from tools.actions import app_manager
+from tools.interfaces import INotification
+from pydbus import SessionBus
 
-main_loop = None
 running = False
 loop_thread = None
-
-def stop_main_loop():
-    global main_loop
-    if main_loop:
-        main_loop.quit()
-
-    return False
 
 def on_action_invoked(notification, action_key):
     if action_key == 'open':
         app_manager.showFullUI(args)
 
-def send_notification(app_name, notif_amount):
-    global main_loop
-
-    bus = SessionBus()
-    notifications = bus.get('.Notifications')
-    notifications.ActionInvoked.connect(on_action_invoked)
-
-    notifications.Notify(
-        "Waydroid",
-        0,
-        "/usr/share/icons/hicolor/512x512/apps/waydroid.png",
-        app_name,
-        f"You have {notif_amount} notifications",
-        ['default', 'Open', 'open', 'Open'],
-        {'urgency': GLib.Variant('y', 1)},
-        5000
-    )
-
-    GLib.timeout_add_seconds(3, stop_main_loop)
-
-    main_loop = GLib.MainLoop()
-    main_loop.run()
-
 def get_app_name_dict():
+    '''
+    This function returns a dictionary of package names and app names
+    '''
     args = None
     app_name_dict = {}
     try:
+        # Initialize arguments
         args = helpers.arguments()
         args.cache = {}
         args.work = config.defaults["work"]
@@ -65,9 +39,12 @@ def get_app_name_dict():
         args.sudo_timer = True
         args.timeout = 1800
 
+        # Initialize DBus services
         ipc.DBusSessionService()
+        # Initialize container manager which is needed to get session state
         cm = ipc.DBusContainerService()
         session = cm.GetSession()
+        # Unfreeze container if it is frozen
         if session["state"] == "FROZEN":
             cm.Unfreeze()
 
@@ -93,9 +70,11 @@ def get_notifs(prev_notifs):
     global running
     notif_counts = defaultdict(int)
 
+    logging.info("Starting get notification service")
+
     while running:
         command = [
-            "sudo", "lxc-attach", "-P", "/var/lib/waydroid/lxc",
+            "lxc-attach", "-P", "/var/lib/waydroid/lxc",
             "-n", "waydroid", "--clear-env", "--", "/system/bin/sh", "-c", "dumpsys notification"
         ]
 
@@ -124,12 +103,15 @@ def get_notifs(prev_notifs):
 
             if count > prev_count:
                 print(f"You have {count} notifications from {app_name}")
-                send_notification(app_name, count)
+                # send_notification(app_name, count)
+                interface = INotification('id.waydro.Notification')
+                interface.NewMessage(app_name, count)
 
         prev_notifs = notif_counts.copy()
         time.sleep(3)
 
 def start(args):
+    print("starting notification manager")
     global running
     global loop_thread
 

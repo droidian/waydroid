@@ -1,0 +1,11 @@
+[Unit]
+Description=Send Notification
+After=sm.puri.Phosh.service
+StartLimitBurst=5000
+StartLimitIntervalSec=0
+
+[Service]
+Type=dbus
+Restart=on-failure
+BusName=id.waydro.Notification
+ExecStart=/usr/bin/waydroid notification_send start
