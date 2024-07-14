@@ -3,8 +3,9 @@
 <component type="desktop-application">
   <id>id.waydro.waydroid</id>
 
-  <name>Waydroid</name>
+  <name>Android™ App Support (Waydroid)</name>
   <summary>Run Android apps natively alongside desktop programs</summary>
+  <category>System</category>
 
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-only</project_license>
