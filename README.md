@@ -13,7 +13,7 @@ The Android system inside the container has direct access to any needed hardware
 
 The Android runtime environment ships with a minimal customized Android system
 image based on [LineageOS](https://lineageos.org/). The image is currently based
-on Android 10.
+on Android 11.
 
 ## Documentation
 
@@ -26,4 +26,4 @@ If you have found an issue with Waydroid, please [file a bug](https://github.com
 ## Get in Touch
 
 If you want to get in contact with the developers please feel free to join the
-*Waydroid* groups in [Matrix](https://matrix.to/#/#waydroid:mrcyjanek.net) or [Telegram](https://t.me/WayDroid).
+*Waydroid* groups in [Matrix](https://matrix.to/#/#waydroid:matrix.org) or [Telegram](https://t.me/WayDroid).
