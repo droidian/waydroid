@@ -23,7 +23,7 @@ Depends: ${misc:Depends},
          waydroid-sensors,
          python3-dbus,
          dbus,
-         policykit-1,
+         polkitd,
 	 iptables
 Description: Android™ application support
  waydroid allows running a separate Android™ environment
