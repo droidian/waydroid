@@ -55,15 +55,16 @@ def generate_nodes_lxc_config(args):
     make_entry("/dev/pvr_sync")
     make_entry("/dev/pmsg0")
     make_entry("/dev/dxg")
-    render, card = tools.helpers.gpu.getDriNode(args)
-    make_entry(render, "dev/dri/renderD128")
-    make_entry(card, "dev/dri/card0")
+    render, _ = tools.helpers.gpu.getDriNode(args)
+    make_entry(render)
 
     for n in glob.glob("/dev/fb*"):
         make_entry(n)
     for n in glob.glob("/dev/graphics/fb*"):
         make_entry(n)
     for n in glob.glob("/dev/video*"):
+        make_entry(n)
+    for n in glob.glob("/dev/dma_heap/*"):
         make_entry(n)
 
     # Binder dev nodes
@@ -258,6 +259,7 @@ def make_base_props(args):
         if dri:
             gralloc = "gbm"
             egl = "mesa"
+            props.append("gralloc.gbm.device=" + dri)
         else:
             gralloc = "default"
             egl = "swiftshader"
@@ -473,7 +475,12 @@ def shell(args):
         command.extend(args.COMMAND)
     else:
         command.append("/system/bin/sh")
-    subprocess.run(command)
+
+    try:
+        subprocess.run(command)
+    except KeyboardInterrupt:
+        pass
+
     if state == "FROZEN":
         freeze(args)
 

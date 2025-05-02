@@ -80,16 +80,19 @@ def set_permissions(args, perm_list=None, mode="777"):
             "/dev/mtk_cmdq",
 
             # Graphics
-            "/dev/dri",
             "/dev/graphics",
             "/dev/pvr_sync",
             "/dev/ion",
         ]
 
+        # DRM render nodes
+        perm_list.extend(glob.glob("/dev/dri/renderD*"))
         # Framebuffers
         perm_list.extend(glob.glob("/dev/fb*"))
         # Videos
         perm_list.extend(glob.glob("/dev/video*"))
+        # DMA-BUF Heaps
+        perm_list.extend(glob.glob("/dev/dma_heap/*"))
 
     for path in perm_list:
         chmod(path, mode)
